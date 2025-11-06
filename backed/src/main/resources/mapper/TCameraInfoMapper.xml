@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tc.modules.mapper.TCameraInfoMapper">
+
+    <select id="getTCameraInfoByOrgIdAndMonitorType" resultType="com.tc.modules.entity.TCameraInfo">
+        SELECT
+            ci.*,
+            s.site_name,
+            s.id as siteId
+        FROM
+            t_site s
+                inner JOIN t_hardware h on s.id = h.site_id
+                inner JOIN t_camera_info ci on h.id = ci.hardware_id
+        WHERE
+            s.org_id = #{orgId} and h.monitor_type = #{monitorType}
+    </select>
+
+    <select id="getHardwareCameraInfo" resultType="com.tc.modules.entity.TCameraInfo">
+        SELECT
+            ci.*,
+            s.site_name,
+            s.id as siteId
+        FROM
+            t_site s
+                inner JOIN t_hardware h on s.id = h.site_id
+                inner JOIN t_camera_info ci on h.id = ci.hardware_id
+        WHERE
+            s.id = #{siteId} and h.hardware_type = #{hardwareType}
+    </select>
+
+    <select id="getTiInfoVoList" resultType="com.tc.modules.vo.TiInfoVo">
+        SELECT
+            th.site_id,
+            ci.hardware_id,
+            ci.id camera_id
+        FROM
+            t_site ts
+                JOIN t_hardware th ON ts.id = th.site_id
+                JOIN t_camera_info ci on th.id = ci.hardware_id
+        WHERE  th.hardware_type = #{hardwareType} and th.monitor_type = #{monitorType} and ts.id = #{siteId}
+    </select>
+
+</mapper>

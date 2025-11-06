@@ -1,0 +1,114 @@
+tetrabot:
+  name: 风电机组安全监控系统
+  version: 1.0.0
+# 开发环境配置
+server:
+  # 服务器的HTTP端口，默认为8080
+  port: 8080
+  servlet:
+    # 应用的访问路径
+    context-path: /
+  tomcat:
+    # tomcat的URI编码
+    uri-encoding: UTF-8
+    # 连接数满后的排队数，默认为100
+    accept-count: 1000
+    threads:
+      # tomcat最大线程数，默认为200
+      max: 800
+      # Tomcat启动初始化的线程数，默认值10
+      min-spare: 100
+
+spring:
+  datasource:
+    # 数据库地址
+    url: jdbc:mysql://192.168.31.251:3306/wind-power?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=GMT%2B8&rewriteBatchedStatements=true
+    username: root
+    password: esvtek2019
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  redis:
+    host: 192.168.31.241
+    password: 123456
+    port: 6379
+    timeout: 2000
+    prefix: "jwt:user-id:"
+    index: 0
+  lock:
+    prefix: "lock:user-id:"
+    # 输错密码次数限定
+    times: 10
+    # 设备绑定ip校验开关
+    deviceControl: false
+    # 锁定时长，单位：分钟
+    lockTime: 20
+  rabbitmq:
+    host: 192.168.31.252
+    port: 5672
+    username: wind-power
+    password: wind-power
+    publisher-returns: true
+    virtual-host: wind_power
+    listener:
+      enabled: false
+
+influxdb:
+  url: http://192.168.31.251:8086
+  token: wfgcHtADedTypF1DstWKWOLu5cajjgN_WSPLDgzGW14jMprX5hTEXHdRGK-Qe3KFQZn6S4DHP8KDglWjaa89xA==
+  org: tc
+  bucket: test
+
+audio:
+  url: http://dev-tpm.top-sequence.com/web-api
+  api-key: api-key
+  api-secret: 123456789
+
+iot:
+  host: 192.168.31.251
+  port: 8088
+  api-key: Authorization
+  api-secret: 123456
+
+
+setting:
+  whiteUrls:
+    - "/auth/login"
+    - "/config/getConfig"
+    - "/auth/captcha"
+    - "/swagger-ui/index.html"
+    - '/v2/api-docs'
+
+# 日志配置
+logging:
+  level:
+    com.tc: debug
+    org.springframework: warn
+
+springfox:
+  documentation:
+    # 总开关（同时设置auto-startup=false，否则/v3/api-docs等接口仍能继续访问）
+    enabled: true
+    auto-startup: true
+    swagger-ui:
+      enabled: true
+
+knife4j:
+  # 开启增强配置
+  enable: true
+  # 标识是否生产环境：true-生产环境关闭文档，false-显示文档
+  production: false
+
+python:
+  alias: python
+  script: ${user.dir}\\script
+
+
+file:
+  pic:
+    # 配置文件上传路径，与nginx配置转发路径匹配
+    folder: /usr/local/file
+    # nginx访问文件资源路径
+    url: http://127.0.0.1:80/local
+  video:
+    folder: ${user.dir}\\file\\video
+  image:
+    folder: /home/user/Desktop/images

@@ -1,0 +1,50 @@
+server:
+  port: 8088
+
+spring:
+  datasource:
+    # 数据库地址
+    url: jdbc:mysql://127.0.0.1:3306/wind-power?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=GMT%2B8&rewriteBatchedStatements=true
+    username: root
+    password: WYfs200177
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  # 配置rabbitMq 服务器
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: wind-power
+    password: wind-power
+    # 确认消息已发送到交换机(Exchange)
+    publisher-confirm-type: correlated
+    # 确认消息已发送到队列(Queue)
+    publisher-returns: true
+    # 虚拟主机名称
+    virtual-host: wind_power
+
+  redis:
+    # 地址
+    host: 127.0.0.1
+    # 端口，默认为 6379
+    port: 6379
+    # 数据库索引
+    database: 0
+    # 密码
+    password: WYfs200177
+    # 连接超时时间（毫秒）
+    timeout: 500
+
+mybatis-plus:
+  mapper-locations: classpath*:com/tc/modules/**/xml/*Mapper.xml
+
+modbus:
+  read-offset: 4000
+
+auth:
+  api-key: Authorization
+  api-secret: 123456
+
+logging:
+  level:
+    com.tc.run : debug
+    com.tc.modules : debug

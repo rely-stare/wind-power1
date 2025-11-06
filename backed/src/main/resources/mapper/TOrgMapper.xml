@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tc.modules.mapper.TOrgMapper">
+
+    <select id="selectOrgListById" resultType="com.tc.modules.entity.TOrg">
+        WITH RECURSIVE
+            t AS (
+                SELECT parent_id, id, org_name, org_type FROM t_org WHERE is_delete = 0 and id = #{id}
+                UNION
+                SELECT o.parent_id, o.id, o.org_name, o.org_type
+                FROM t_org o JOIN t ON o.is_delete = 0 AND t.id = o.parent_id
+            )
+        select * from t
+        <where>
+            <if test="orgType != null and orgType != ''">
+                org_type &lt;= #{orgType}
+            </if>
+        </where>
+    </select>
+
+</mapper>

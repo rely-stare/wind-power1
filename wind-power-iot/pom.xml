@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.7.2</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+
+	<groupId>com.tc</groupId>
+	<artifactId>wind-power-iot</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>wind-power-iot</name>
+	<description>wind-power-iot</description>
+
+	<properties>
+		<java.version>8</java.version>
+	</properties>
+	<dependencies>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-amqp</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-redis</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>8.0.31</version>
+		</dependency>
+
+		<!-- mybatis-plus -->
+		<dependency>
+			<groupId>com.baomidou</groupId>
+			<artifactId>mybatis-plus-boot-starter</artifactId>
+			<version>3.5.2</version>
+		</dependency>
+
+		<!-- lombok插件 -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<optional>true</optional>
+		</dependency>
+
+		<dependency>
+			<groupId>io.netty</groupId>
+			<artifactId>netty-all</artifactId>
+		</dependency>
+
+		<!--FastJSON-->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>1.2.83</version>
+		</dependency>
+
+		<dependency>
+			<groupId>cn.hutool</groupId>
+			<artifactId>hutool-all</artifactId>
+			<version>5.8.10</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.windpower</groupId>
+			<artifactId>jna</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/lib/jna.jar</systemPath>
+		</dependency>
+
+		<dependency>
+			<groupId>com.windpower</groupId>
+			<artifactId>examples</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/lib/examples.jar</systemPath>
+		</dependency>
+
+
+<!--		<dependency>-->
+<!--			<groupId>com.infiniteautomation</groupId>-->
+<!--			<artifactId>modbus4j</artifactId>-->
+<!--			<version>3.0.3</version>-->
+<!--		</dependency>-->
+
+<!--				<dependency>-->
+<!--					<groupId>com.digitalpetri.modbus</groupId>-->
+<!--					<artifactId>modbus-tcp</artifactId>-->
+<!--					<version>2.1.0</version>-->
+<!--				</dependency>-->
+
+
+	</dependencies>
+
+<!--	<repositories>-->
+<!--		<repository>-->
+<!--			<releases>-->
+<!--				<enabled>false</enabled>-->
+<!--			</releases>-->
+<!--			<snapshots>-->
+<!--				<enabled>true</enabled>-->
+<!--			</snapshots>-->
+<!--			<id>ias-snapshots</id>-->
+<!--			<name>Infinite Automation Snapshot Repository</name>-->
+<!--			<url>https://maven.mangoautomation.net/repository/ias-snapshot/</url>-->
+<!--		</repository>-->
+<!--		<repository>-->
+<!--			<releases>-->
+<!--				<enabled>true</enabled>-->
+<!--			</releases>-->
+<!--			<snapshots>-->
+<!--				<enabled>false</enabled>-->
+<!--			</snapshots>-->
+<!--			<id>ias-releases</id>-->
+<!--			<name>Infinite Automation Release Repository</name>-->
+<!--			<url>https://maven.mangoautomation.net/repository/ias-release/</url>-->
+<!--		</repository>-->
+<!--	</repositories>-->
+
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<includeSystemScope>true</includeSystemScope>
+				</configuration>
+			</plugin>
+		</plugins>
+
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+			<resource>
+				<directory>src/main/java</directory>
+				<includes>
+					<include>**/*.xml</include>
+				</includes>
+			</resource>
+		</resources>
+	</build>
+
+</project>

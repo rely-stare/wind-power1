@@ -1,0 +1,21 @@
+package com.tc.modules.export;
+
+import com.alibaba.excel.annotation.ExcelProperty;
+import com.tc.modules.export.convert.DateToStringConverter;
+import lombok.Data;
+
+import java.util.Date;
+
+@Data
+public class SpeedDataExport {
+
+    @ExcelProperty(value = "Time", index = 0, converter = DateToStringConverter.class)
+    private Date createTime;
+
+    @ExcelProperty(value = "Site ID", index = 1)
+    private Integer siteId;
+
+    @ExcelProperty(value = "GeneratorSpeed", index = 2)
+    private Double speed;
+
+}

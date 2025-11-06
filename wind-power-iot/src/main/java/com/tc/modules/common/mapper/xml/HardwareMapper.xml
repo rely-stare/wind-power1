@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tc.modules.common.mapper.HardwareMapper">
+
+    <select id="getTiList" resultType="com.tc.modules.hk.entity.DeviceInfoEntity">
+        SELECT
+            ci.hardware_id,
+            h.hardware_code,
+            ci.id as camera_id,
+            ci.ip,
+            ci.port,
+            ci.username,
+            ci.password
+        FROM
+            t_hardware h
+                JOIN t_camera_info ci ON h.id = ci.hardware_id
+        WHERE
+            h.hardware_type = 2
+    </select>
+
+    <select id="getSpeedInfo" resultType="java.util.Map">
+        SELECT
+            id,
+            site_id,
+            ip,
+            port,
+            slave_id,
+            is_delete,
+            create_by,
+            create_time,
+            update_by,
+            update_time
+        FROM
+            t_speed_info
+        where is_delete = 0
+    </select>
+
+</mapper>

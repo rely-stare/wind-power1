@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tc.modules.mapper.TAlarmMapper">
+
+    <select id="getAlarmPage" resultType="com.tc.modules.entity.TAlarm">
+        SELECT
+            ta.*,
+            ts.site_name,
+            th.hardware_type,
+            th.monitor_type
+        FROM
+            `t_alarm` ta
+                JOIN t_hardware th ON ta.hardware_id = th.id
+                JOIN t_site ts on ta.site_id = ts.id
+        <where>
+            <if test="siteIds != null and siteIds.size() > 0">
+                ta.site_id in
+                <foreach collection="siteIds" item="siteId" open="(" separator="," close=")">
+                  #{siteId}
+                </foreach>
+            </if>
+
+            <if test="query.id != null">
+                AND ta.id = #{query.id}
+            </if>
+
+            <if test="query.hardwareId != null">
+                AND ta.hardware_id = #{query.hardwareId}
+            </if>
+
+            <if test="query.alarmType != null">
+                AND ta.alarm_type = #{query.alarmType}
+            </if>
+
+            <if test="query.isCheck != null ">
+                AND ta.is_check = #{query.isCheck}
+            </if>
+
+            <if test="query.startTime != null and query.startTime != '' and query.endTime != null and query.endTime !=''">
+                AND ta.alarm_time BETWEEN #{query.startTime} AND #{query.endTime}
+            </if>
+        </where>
+
+        ORDER BY ta.alarm_time DESC
+
+    </select>
+
+</mapper>

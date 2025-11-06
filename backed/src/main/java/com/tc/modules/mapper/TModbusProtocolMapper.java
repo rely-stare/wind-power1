@@ -1,0 +1,9 @@
+package com.tc.modules.mapper;
+
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.tc.modules.entity.TModbusProtocol;
+import org.apache.ibatis.annotations.Mapper;
+
+@Mapper
+public interface TModbusProtocolMapper extends BaseMapper<TModbusProtocol> {
+}

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>实时数据监测 - ECharts + SSE</title>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+
+    <style>
+        #main {
+            width: 100%;
+            height: 500px;
+        }
+
+        #controls {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+<h2>实时数据监测（SSE 接口）</h2>
+<div id="main"></div>
+
+<script>
+    let chart = echarts.init(document.getElementById('main'));
+    let data = [];
+    let option = {
+        title: {
+            text: 'Dynamic Data & Time Axis'
+        },
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                animation: false
+            }
+        },
+        xAxis: {
+            type: 'time',
+        },
+        yAxis: {
+            type: 'value',
+            boundaryGap: [0, '100%'],
+        },
+        series: [
+            {
+                name: 'Fake Data',
+                type: 'line',
+                showSymbol: false,
+                data: data
+            }
+        ]
+    };
+
+
+    let eventSource = new EventSource('http://192.168.31.251:8089/sse/speedFluctuate/60/91');
+    eventSource.onmessage = function (event) {
+        try {
+            let newData = JSON.parse(event.data);
+            if (!Array.isArray(newData) || newData.length === 0) return;
+
+            let innerData = newData[0];
+            let fluctuateDelay = innerData.find(item => item.name === 'fluctuateDelay');
+
+            if (fluctuateDelay && fluctuateDelay.value) {
+                fluctuateDelay.value.forEach(point => {
+                    let time = point[0];
+                    let value = parseFloat(point[1]);
+                    data.push({name: time, value: [time, value]})
+                    if (data.length > 20) {
+                        data.shift();
+                    }
+                });
+            }
+            chart.setOption(option);
+        } catch (error) {
+            console.error("解析数据失败:", error);
+        }
+    }
+
+    // function randomData() {
+    //     now = new Date(+now + oneDay);
+    //     value = value + Math.random() * 21 - 10;
+    //     return {
+    //         name: now.toString(),
+    //         value: [
+    //             [now.getFullYear(), now.getMonth() + 1, now.getDate()].join('/'),
+    //             Math.round(value)
+    //         ]
+    //     };
+    // }
+    //
+    //
+    // setInterval(function () {
+    //     for (var i = 0; i < 5; i++) {
+    //         data.shift();
+    //         data.push(randomData());
+    //     }
+    //     chart.setOption(option);
+    // }, 1000);
+    //
+    // let now = new Date(1997, 9, 3);
+    // let oneDay = 24 * 3600 * 1000;
+    // let value = Math.random() * 1000;
+    // for (var i = 0; i < 100; i++) {
+    //     data.push(randomData());
+    // }
+
+
+
+</script>
+</body>
+</html>

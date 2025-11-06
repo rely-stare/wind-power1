@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tc.modules.mapper.TAudioInfoMapper">
+
+    <select id="getTAudioInfoByOrgIdAndMonitorType" resultType="com.tc.modules.entity.TAudioInfo">
+        SELECT
+            ai.*,
+            s.site_name,
+            s.id as siteId
+        FROM
+            t_site s
+                LEFT JOIN t_hardware h on s.id = h.site_id
+                LEFT JOIN t_audio_info ai on h.id = ai.hardware_id
+        WHERE
+            s.org_id = #{orgId} and h.monitor_type = #{monitorType}
+    </select>
+
+    <select id="getTAudioInfoByCode" resultType="com.tc.modules.entity.TAudioInfo">
+
+        SELECT
+            ai.*,
+            s.site_name,
+            s.id as siteId,
+            h.monitor_location
+        FROM
+            t_site s
+                LEFT JOIN t_hardware h on s.id = h.site_id
+                LEFT JOIN t_audio_info ai on h.id = ai.hardware_id
+        WHERE
+            ai.detect_position = #{code}
+
+    </select>
+
+
+</mapper>

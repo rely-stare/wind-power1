@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tc.modules.common.mapper.CameraAreaMapper">
+
+
+    <select id="getCameraNvrByHardwareId" resultType="com.tc.modules.common.entity.TCameraNrvInfo">
+        SELECT
+            ci.id AS camera_id,
+            ci.nvr_id,
+            ci.hardware_id,
+            ci.nvr_channel_id,
+            ni.nvr_ip,
+            ni.nvr_port,
+            ni.`password` AS nvrPsw,
+            ni.username AS nvrUser
+        FROM
+            t_camera_info ci
+                JOIN t_nvr_info ni ON ci.nvr_id = ni.id
+        WHERE
+            ci.hardware_id = #{hardwareId}
+    </select>
+
+</mapper>
